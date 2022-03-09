@@ -1,6 +1,8 @@
-// cargo watch -w src -s "wasm-pack build --target web"
+// cargo watch -w src -s "wasm-pack build --target web --no-typescript --features console_log"
+
 mod utils;
 
+use wasm_bindgen::prelude::*;
 
 // When the `wee_alloc` feature is enabled, use `wee_alloc` as the global
 // allocator.
@@ -10,3 +12,23 @@ static ALLOC: wee_alloc::WeeAlloc = wee_alloc::WeeAlloc::INIT;
 
 mod specfun;
 mod dist;
+
+use cfg_if::cfg_if;
+cfg_if! {
+    if #[cfg(feature = "console_log")] {
+        fn init_log() {
+            use log::Level;
+            console_log::init_with_level(Level::Trace).expect("error initializing log");
+        }
+    } else {
+        fn init_log() {}
+    }
+}
+
+use log::info;
+#[wasm_bindgen(start)]
+pub fn main() -> Result<(), JsValue>{
+    init_log();
+    info!("math.wasm");
+    Ok(())
+}
