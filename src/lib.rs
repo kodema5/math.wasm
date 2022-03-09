@@ -9,3 +9,4 @@ mod utils;
 static ALLOC: wee_alloc::WeeAlloc = wee_alloc::WeeAlloc::INIT;
 
 mod specfun;
+mod dist;

@@ -3,7 +3,7 @@ import { assertEquals, assertExists, assertAlmostEquals } from "https://deno.lan
 import init, * as math from "../pkg/math.js"
 
 
-Deno.test("specfun", async(t) => {
+Deno.test("special functions", async(t) => {
     await init()
     window.math = math
 
